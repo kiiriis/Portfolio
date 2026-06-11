@@ -104,6 +104,24 @@ const EXPERIENCES: ExpDef[] = [
       "Packaged and deployed containerized batch inference with Docker and CI/CD, adding output validation and run-level monitoring to reach a 99.5% successful batch completion rate.",
     ],
   },
+  {
+    id: "exp-matrix",
+    role: "Internship Trainee",
+    organization: "Matrix Comsec",
+    location: "Vadodara, India",
+    startDate: "May 2023",
+    endDate: "Aug 2023",
+    summary:
+      "End-to-end face authentication system — from model training to low-latency serving.",
+    techTags: ["PyTorch", "Python", "Computer Vision", "REST APIs", "Docker", "Linux"],
+    sortOrder: 3,
+    bullets: [
+      "Built an end-to-end face authentication system using PyTorch for model training and backend microservices for real-time enrollment, verification, and inference serving.",
+      "Developed REST API services to connect the trained authentication model with production backend systems, enabling low-latency request handling at 100+ requests/sec with sub-40 ms latency.",
+      "Designed a synthetic data generation and training pipeline with 10,000+ augmented face images, reducing manual labeling effort by 80% and improving model robustness.",
+      "Optimized the model serving path across preprocessing, inference, caching, and API layers, improving recognition accuracy by 23% while maintaining reliable service availability.",
+    ],
+  },
 ];
 
 const EDUCATION = [
@@ -269,28 +287,111 @@ Implements **Z-score, EWMA, and composite-score** flare detection plus LLM-gener
     featured: false,
     sortOrder: 8,
   },
+  {
+    title: "CampusBites",
+    tagline:
+      "A MERN food-ordering app that kills the campus canteen queue — order from your table, get pinged when it's ready.",
+    description: `A full-stack **MERN** application built to solve real-life chaos in college canteens: students order directly from their table and get real-time notifications the moment an order is ready, cutting crowding and boosting vendor throughput.
+
+- Real-time menu with item availability and estimated prep times.
+- Order status tracking (**Preparing → Ready**) with instant notifications.
+- Admin panel for menu management and sales analytics.
+- JWT-based auth, multiple payment options, and a mobile-first responsive UI.`,
+    techTags: ["React", "Node.js", "Express.js", "MongoDB", "JWT", "REST APIs"],
+    category: "Web App",
+    githubUrl: "https://github.com/kiiriis/CampusBites",
+    featured: false,
+    sortOrder: 9,
+  },
+  {
+    title: "The 43rd Street",
+    tagline:
+      "A Spring Boot + MVC e-commerce platform for kitchen, garden, and office products.",
+    description: `A full-stack **e-commerce platform** for kitchen, garden, and office products, built with **Java + Spring Boot** on a clean **MVC** architecture with separate customer and admin portals.
+
+- Dual-portal design: a customer storefront plus an admin product/order management console.
+- Full cart → checkout → billing workflow with careful state management.
+- Email integration via **JavaMailSender** for order confirmations and registration verification.
+- Out-of-stock handling, input validation, exception handling, and paginated order history.`,
+    techTags: ["Java", "Spring Boot", "MySQL", "JSP", "Maven", "MVC"],
+    category: "Web App",
+    githubUrl: "https://github.com/kiiriis/The-43rd-Street",
+    featured: false,
+    sortOrder: 10,
+  },
 ];
 
 const SKILL_GROUPS: { category: string; names: string[] }[] = [
   {
     category: "Languages",
-    names: ["Go", "C++", "Rust", "Python", "TypeScript", "Java", "SQL", "Bash"],
+    names: [
+      "Python",
+      "Go",
+      "C++",
+      "Java",
+      "TypeScript",
+      "JavaScript",
+      "Rust",
+      "SQL",
+      "Bash",
+    ],
   },
   {
-    category: "Backend & Systems",
+    category: "Backend & APIs",
     names: [
       "Node.js",
+      "FastAPI",
       "Spring Boot",
       "Django",
       "Express.js",
-      "gRPC",
       "REST APIs",
-      "Kafka",
+      "gRPC",
+      "GraphQL",
       "WebSockets",
     ],
   },
   {
-    category: "AI / LLM",
+    category: "Distributed Systems",
+    names: [
+      "System Design",
+      "Microservices",
+      "Raft",
+      "Paxos",
+      "Apache Kafka",
+      "Event-Driven Architecture",
+      "Caching",
+      "Load Balancing",
+    ],
+  },
+  {
+    category: "Databases & Storage",
+    names: [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "Redis",
+      "DynamoDB",
+      "Elasticsearch",
+      "pgvector",
+      "Qdrant",
+    ],
+  },
+  {
+    category: "Machine Learning",
+    names: [
+      "PyTorch",
+      "TensorFlow",
+      "scikit-learn",
+      "Keras",
+      "Hugging Face",
+      "XGBoost",
+      "OpenCV",
+      "Computer Vision",
+      "NLP",
+    ],
+  },
+  {
+    category: "LLM & GenAI",
     names: [
       "OpenAI API",
       "Claude API",
@@ -299,23 +400,38 @@ const SKILL_GROUPS: { category: string; names: string[] }[] = [
       "RAG",
       "Vector Search",
       "FAISS",
+      "Fine-tuning",
+      "Prompt Engineering",
     ],
   },
   {
-    category: "Machine Learning",
-    names: ["PyTorch", "TensorFlow", "scikit-learn", "Hugging Face", "U-Net", "XGBoost"],
+    category: "MLOps & Data",
+    names: [
+      "MLflow",
+      "Weights & Biases",
+      "DVC",
+      "Pandas",
+      "NumPy",
+      "Model Serving",
+      "Experiment Tracking",
+      "Data Pipelines",
+    ],
   },
   {
-    category: "Frontend",
-    names: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "React Flow"],
-  },
-  {
-    category: "Cloud & DevOps",
-    names: ["AWS", "Docker", "Kubernetes", "Terraform", "GitHub Actions", "CI/CD", "Linux", "NGINX"],
-  },
-  {
-    category: "Databases & Observability",
-    names: ["PostgreSQL", "Redis", "MongoDB", "MySQL", "pgvector", "Qdrant", "Prometheus", "Grafana"],
+    category: "Cloud, DevOps & Observability",
+    names: [
+      "AWS",
+      "GCP",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "GitHub Actions",
+      "CI/CD",
+      "Linux",
+      "NGINX",
+      "Prometheus",
+      "Grafana",
+    ],
   },
 ];
 

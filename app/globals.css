@@ -281,3 +281,20 @@
 .drop-cap > p:first-of-type::first-letter {
   @apply float-left mr-3 mt-1 font-display text-[3.4em] font-semibold leading-[0.8] text-primary;
 }
+
+/*
+ * Theme switch: a circular reveal driven by the View Transitions API.
+ * We kill the default cross-fade and let theme-toggle.tsx animate the new
+ * theme's clip-path as an expanding circle from the toggle button.
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 0;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}

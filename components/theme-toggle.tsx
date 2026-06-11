@@ -6,6 +6,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+type VTDocument = Document & {
+  startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+};
+
 export function ThemeToggle({
   className,
   variant = "icon",
@@ -18,12 +22,53 @@ export function ThemeToggle({
   React.useEffect(() => setMounted(true), []);
 
   const isDark = mounted && resolvedTheme === "dark";
-  const toggle = () => setTheme(isDark ? "light" : "dark");
+
+  const toggle = React.useCallback(
+    (e?: React.MouseEvent) => {
+      const next = isDark ? "light" : "dark";
+      const doc = document as VTDocument;
+      const reduced = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      // Fallback: just switch (no View Transitions support or reduced motion).
+      if (!doc.startViewTransition || reduced) {
+        setTheme(next);
+        return;
+      }
+
+      // Circular reveal centered on the click point (the toggle button).
+      const x = e?.clientX ?? window.innerWidth - 24;
+      const y = e?.clientY ?? 24;
+      const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
+      );
+
+      const transition = doc.startViewTransition(() => setTheme(next));
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 520,
+            easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+            pseudoElement: "::view-transition-new(root)",
+          }
+        );
+      });
+    },
+    [isDark, setTheme]
+  );
 
   if (variant === "row") {
     return (
       <button
-        onClick={toggle}
+        onClick={(e) => toggle(e)}
         className={cn(
           "flex items-center gap-3 px-1 py-3 font-mono text-sm uppercase tracking-[0.14em] text-ink-soft transition-colors hover:text-primary",
           className
@@ -38,7 +83,7 @@ export function ThemeToggle({
 
   return (
     <button
-      onClick={toggle}
+      onClick={(e) => toggle(e)}
       className={cn(
         "relative flex h-9 w-9 items-center justify-center overflow-hidden border border-transparent text-muted-foreground transition-colors hover:border-ink hover:text-foreground",
         className
