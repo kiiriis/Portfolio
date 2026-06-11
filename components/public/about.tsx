@@ -7,7 +7,7 @@ const STATS = [
   { value: "526K", label: "Raft txns / second" },
   { value: "1.2 TB", label: "imagery processed / day" },
   { value: "50+", label: "web solutions shipped" },
-  { value: "3.83", label: "graduate GPA" },
+  { value: "3.84", label: "graduate GPA" },
 ];
 
 export function About({ aboutMd }: { aboutMd: string }) {

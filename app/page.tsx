@@ -67,6 +67,7 @@ export default async function HomePage() {
           email={profile.email}
           githubUrl={profile.githubUrl}
           linkedinUrl={profile.linkedinUrl}
+          resumeUrl={profile.resumeUrl}
         />
 
         <About aboutMd={profile.aboutMd} />

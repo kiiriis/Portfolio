@@ -1,7 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, Github, Linkedin, Mail, MapPin } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowRight,
+  FileText,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+} from "lucide-react";
 
 const container = {
   hidden: {},
@@ -74,6 +82,7 @@ export function Hero({
   email,
   githubUrl,
   linkedinUrl,
+  resumeUrl,
 }: {
   name: string;
   headline: string;
@@ -82,6 +91,7 @@ export function Hero({
   email: string;
   githubUrl?: string | null;
   linkedinUrl?: string | null;
+  resumeUrl?: string | null;
 }) {
   const [firstName, ...rest] = name.split(/\s+/);
   const lastName = rest.join(" ");
@@ -175,6 +185,16 @@ export function Hero({
                 >
                   Get in touch
                 </a>
+                {resumeUrl && (
+                  <a
+                    href={resumeUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group inline-flex items-center gap-2 border border-ink bg-transparent px-6 py-3.5 font-mono text-xs font-semibold uppercase tracking-[0.16em] transition-all hover:-translate-x-1 hover:-translate-y-1 hover:bg-primary hover:text-primary-foreground hover:shadow-hard"
+                  >
+                    <FileText className="h-4 w-4" /> Résumé
+                  </a>
+                )}
               </motion.div>
 
               <motion.div
