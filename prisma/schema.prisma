@@ -1,0 +1,113 @@
+// Krish Makadia — Portfolio data model.
+// Postgres (Neon) + pgvector for the RAG chatbot.
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [vector]
+}
+
+/// Single-row profile (id is always "singleton").
+model Profile {
+  id          String   @id @default("singleton")
+  name        String
+  headline    String // e.g. "MS CS @ Stony Brook · Distributed Systems & Full-Stack"
+  heroTagline String // short punchy line under the name
+  aboutMd     String // markdown story / bio
+  location    String?
+  email       String
+  githubUrl   String
+  linkedinUrl String
+  resumeUrl   String?
+  updatedAt   DateTime @updatedAt @default(now())
+}
+
+model Experience {
+  id           String             @id @default(cuid())
+  role         String
+  organization String
+  location     String?
+  startDate    String // human label, e.g. "Jan 2025"
+  endDate      String? // null/"Present"
+  summary      String? // optional one-liner about the role
+  techTags     String[]           @default([])
+  sortOrder    Int                @default(0)
+  bullets      ExperienceBullet[]
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt @default(now())
+}
+
+model ExperienceBullet {
+  id           String     @id @default(cuid())
+  experienceId String
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  text         String
+  sortOrder    Int        @default(0)
+
+  @@index([experienceId])
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  degree      String
+  institution String
+  location    String?
+  gpa         String?
+  startDate   String?
+  endDate     String?
+  details     String?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  tagline      String
+  description  String // long markdown
+  techTags     String[] @default([])
+  category     String? // e.g. "Distributed Systems", "Web App", "AI/ML"
+  githubUrl    String?
+  liveUrl      String?
+  demoVideoUrl String?
+  images       String[] @default([])
+  featured     Boolean  @default(false)
+  published    Boolean  @default(true)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt @default(now())
+
+  @@index([featured])
+  @@index([sortOrder])
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  category  String // "Languages", "Backend & Systems", "AI / LLM", ...
+  name      String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([category])
+}
+
+/// One row per embedded chunk. The vector column is unsupported by Prisma's
+/// type system, so reads/writes go through raw SQL (see lib/embeddings.ts).
+model Embedding {
+  id         String                      @id @default(cuid())
+  sourceType String // "profile" | "experience" | "education" | "project" | "skills" | "research"
+  sourceId   String // id of the originating row (or a stable label)
+  content    String
+  embedding  Unsupported("vector(1536)")
+  createdAt  DateTime                    @default(now())
+
+  @@index([sourceType, sourceId])
+}

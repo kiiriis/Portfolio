@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /*
+   * "SPEC SHEET" — the portfolio as a precision engineering document.
+   * Warm paper, warm ink, one hot accent: international orange.
+   */
+  :root {
+    --paper: 42 38% 95%;
+    --ink: 30 14% 9%;
+    --ink-soft: 30 8% 26%;
+
+    --background: 42 38% 95%;
+    --foreground: 30 14% 9%;
+    --card: 44 40% 97%;
+    --card-foreground: 30 14% 9%;
+    --popover: 44 40% 97%;
+    --popover-foreground: 30 14% 9%;
+    --primary: 17 100% 47%;
+    --primary-foreground: 42 38% 97%;
+    --secondary: 40 20% 88%;
+    --secondary-foreground: 30 14% 9%;
+    --muted: 40 20% 89%;
+    --muted-foreground: 30 7% 38%;
+    --accent: 40 22% 86%;
+    --accent-foreground: 30 14% 9%;
+    --destructive: 0 72% 44%;
+    --destructive-foreground: 42 38% 97%;
+    --border: 35 12% 76%;
+    --input: 35 12% 70%;
+    --ring: 17 100% 47%;
+    --radius: 0.125rem;
+
+    /* Inverted "blueprint" palette for dark panels. */
+    --blueprint: 220 28% 10%;
+    --blueprint-line: 217 25% 24%;
+    --blueprint-foreground: 42 38% 95%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Fine grain so the paper never reads as flat digital white. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.05'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 0;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.5);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Graph-paper grid: fine cells with a heavier rule every 5 cells. */
+  .bg-graph {
+    background-image:
+      linear-gradient(to right, hsl(var(--ink) / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--ink) / 0.045) 1px, transparent 1px),
+      linear-gradient(to right, hsl(var(--ink) / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--ink) / 0.07) 1px, transparent 1px);
+    background-size:
+      24px 24px,
+      24px 24px,
+      120px 120px,
+      120px 120px;
+  }
+  .bg-graph-fade {
+    mask-image: radial-gradient(
+      ellipse 90% 70% at 50% 30%,
+      black 35%,
+      transparent 80%
+    );
+  }
+
+  /* Blueprint grid for inverted dark panels. */
+  .bg-blueprint-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--blueprint-line) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--blueprint-line) / 0.5) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Mono annotation label: `FIG. 02 — EXPERIENCE` */
+  .annotation {
+    @apply font-mono text-[11px] uppercase tracking-[0.22em];
+  }
+
+  /* Redline link underline that draws in on hover. */
+  .draw-link {
+    background-image: linear-gradient(
+      hsl(var(--primary)),
+      hsl(var(--primary))
+    );
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: left 100%;
+    transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .draw-link:hover {
+    background-size: 100% 2px;
+  }
+
+  /* Registration mark (+) used at panel corners. */
+  .reg-mark {
+    position: relative;
+    width: 13px;
+    height: 13px;
+  }
+  .reg-mark::before,
+  .reg-mark::after {
+    content: "";
+    position: absolute;
+    background: hsl(var(--ink) / 0.45);
+  }
+  .reg-mark::before {
+    left: 6px;
+    top: 0;
+    width: 1px;
+    height: 13px;
+  }
+  .reg-mark::after {
+    left: 0;
+    top: 6px;
+    width: 13px;
+    height: 1px;
+  }
+  .reg-mark-light::before,
+  .reg-mark-light::after {
+    background: hsl(var(--blueprint-foreground) / 0.4);
+  }
+
+  /* Paper card that lifts onto a hard ink shadow. */
+  .lift-card {
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .lift-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 5px 5px 0 0 hsl(var(--ink));
+  }
+
+  .marquee-mask {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+  }
+}
+
+/* Minimal prose styling for markdown (about/projects/chat). */
+.prose-portfolio {
+  @apply text-ink-soft leading-relaxed;
+}
+.prose-portfolio p {
+  @apply mb-3;
+}
+.prose-portfolio strong {
+  @apply text-foreground font-semibold;
+}
+.prose-portfolio a {
+  @apply font-medium text-primary underline decoration-primary/40 underline-offset-4 transition-colors hover:decoration-primary;
+}
+.prose-portfolio ul {
+  @apply mb-3 list-none space-y-1.5 pl-0;
+}
+.prose-portfolio ul li {
+  @apply relative pl-5;
+}
+.prose-portfolio ul li::before {
+  content: "";
+  @apply absolute left-0 top-[0.6em] h-1.5 w-1.5 bg-primary;
+}
+.prose-portfolio ol {
+  @apply mb-3 list-decimal space-y-1.5 pl-5;
+}
+.prose-portfolio code {
+  @apply bg-secondary px-1.5 py-0.5 font-mono text-[0.85em] text-foreground;
+}
+.prose-portfolio h1,
+.prose-portfolio h2,
+.prose-portfolio h3 {
+  @apply mb-2 mt-4 font-display font-semibold text-foreground;
+}
+
+/* Editorial drop cap for the opening paragraph of About. */
+.drop-cap > p:first-of-type::first-letter {
+  @apply float-left mr-3 mt-1 font-display text-[3.4em] font-semibold leading-[0.8] text-primary;
+}
