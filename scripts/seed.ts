@@ -24,19 +24,22 @@ const PROFILE = {
   id: "singleton",
   name: "Krish Makadia",
   headline:
-    "MS CS @ Stony Brook · Distributed Systems & Full-Stack Engineer",
+    "MS CS @ Stony Brook · AI/ML, Distributed Systems & Full-Stack Engineer",
   heroTagline:
-    "I build high-performance distributed systems and polished, production-grade full-stack products.",
-  aboutMd: `I'm a Master's student in Computer Science at **Stony Brook University** (graduating May 2026), focused on the systems that make software fast and reliable at scale.
+    "I build AI/ML that actually ships, distributed systems that survive failure, and full-stack apps people enjoy using — including the slightly over-confident chatbot in the bottom-right corner.",
+  aboutMd: `I'm a freshly-minted MS in Computer Science from **Stony Brook University** (Class of 2026), happiest at the intersection of *"is this fast?"* and *"is this actually smart?"* — which usually means **AI/ML** and **distributed systems** showing up in the same sentence.
 
-My research rebuilds replication for **Mako**, a geo-replicated key-value store — I replaced its Paxos layer with a custom **C++ Raft** backend and pushed it to **526K committed transactions/second**. Alongside research, I've shipped production software as a full-stack engineer at Stony Brook's Web Dev department and built large-scale satellite-imagery ML pipelines at **ISRO**.
+On the **AI/ML** side: I trained **U-Net** models on **1.2 TB/day** of satellite imagery at **ISRO**, ship LLM-powered tools, and have built enough **RAG** pipelines that standing up a chatbot is now an afternoon's work. Exhibit A is floating in the bottom-right of this page — go ahead, grill it about me. It knows my projects better than I do at 3 a.m.
 
-I like working across the stack: from consensus protocols and gRPC services down at the systems layer, up through clean React/Next.js front-ends, and across into applied AI/LLM tooling. I care a lot about measurable impact — throughput, latency, and developer velocity — and about building things that are genuinely nice to use.`,
+On the **systems** side: my research rebuilt replication for **Mako**, a geo-replicated key-value store, in **C++ Raft** and pushed it to **526K committed transactions/second** (I celebrated every 10K like a personal record). And as a full-stack engineer at Stony Brook's Web Dev department I've shipped 50+ production apps — React/Next.js up front, Node/Go/Python behind, and the unglamorous glue (auth, CI/CD, observability) that keeps things alive past 2 a.m.
+
+Basically, I like building things end to end — from a consensus protocol to a button that feels good to click. If it involves **AI/ML, distributed systems, or a tasteful amount of over-engineering**, count me in.`,
   location: "New York, NY",
   email: "makadiakrish@gmail.com",
   githubUrl: "https://github.com/kiiriis",
   linkedinUrl: "https://linkedin.com/in/kmakadia",
-  resumeUrl: null as string | null, // drop a PDF at /public/resume.pdf and set "/resume.pdf"
+  resumeUrl:
+    "https://drive.google.com/file/d/1vNK1T5dmjgD74nR042U1O4oMtACBr3sp/view?usp=drive_link",
 };
 
 type ExpDef = {
