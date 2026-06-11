@@ -13,6 +13,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const LINKS = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
@@ -63,6 +64,7 @@ export function AdminNav() {
           })}
         </nav>
         <div className="ml-auto flex shrink-0 items-center gap-1">
+          <ThemeToggle />
           <a
             href="/"
             target="_blank"

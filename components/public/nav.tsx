@@ -4,6 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X, FileText, Github } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const LINKS = [
   { href: "#about", label: "About", no: "01" },
@@ -80,6 +81,7 @@ export function Nav({
         </div>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           {githubUrl && (
             <a
               href={githubUrl}

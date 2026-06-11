@@ -39,6 +39,43 @@
     --blueprint-foreground: 42 38% 95%;
   }
 
+  /*
+   * Dark counterpart — "drafting board after hours": warm charcoal stock,
+   * warm off-white ink for the line work, the same international orange.
+   * The blueprint panel inverts to light paper so it stays the one
+   * contrasting block on the page.
+   */
+  .dark {
+    --paper: 28 14% 8%;
+    --ink: 40 20% 82%;
+    --ink-soft: 38 13% 64%;
+
+    --background: 28 16% 7%;
+    --foreground: 40 30% 92%;
+    --card: 28 12% 10%;
+    --card-foreground: 40 30% 92%;
+    --popover: 28 12% 11%;
+    --popover-foreground: 40 30% 92%;
+    --primary: 18 100% 56%;
+    --primary-foreground: 28 16% 7%;
+    --secondary: 30 8% 17%;
+    --secondary-foreground: 40 30% 92%;
+    --muted: 30 8% 15%;
+    --muted-foreground: 38 11% 61%;
+    --accent: 30 9% 21%;
+    --accent-foreground: 40 30% 92%;
+    --destructive: 2 78% 60%;
+    --destructive-foreground: 40 30% 94%;
+    --border: 36 12% 22%;
+    --input: 36 12% 28%;
+    --ring: 18 100% 56%;
+
+    /* Blueprint inverts to warm paper in dark mode. */
+    --blueprint: 40 34% 93%;
+    --blueprint-line: 30 12% 66%;
+    --blueprint-foreground: 28 16% 9%;
+  }
+
   * {
     @apply border-border;
   }
