@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/admin/field";
+import { ImageInput } from "@/components/admin/image-input";
 import type { Profile } from "@prisma/client";
 
 type FormState = {
@@ -20,6 +21,7 @@ type FormState = {
   githubUrl: string;
   linkedinUrl: string;
   resumeUrl: string;
+  photos: string[];
 };
 
 export function ProfileForm({ profile }: { profile: Profile | null }) {
@@ -35,6 +37,7 @@ export function ProfileForm({ profile }: { profile: Profile | null }) {
     githubUrl: profile?.githubUrl ?? "",
     linkedinUrl: profile?.linkedinUrl ?? "",
     resumeUrl: profile?.resumeUrl ?? "",
+    photos: profile?.photos ?? [],
   });
 
   function set<K extends keyof FormState>(key: K, value: FormState[K]) {
@@ -125,6 +128,13 @@ export function ProfileForm({ profile }: { profile: Profile | null }) {
           onChange={(e) => set("resumeUrl", e.target.value)}
           placeholder="/resume.pdf"
         />
+      </Field>
+
+      <Field
+        label="Photos"
+        hint="Your headshot / photos, shown in the About section. Paste an image URL, or upload a file (needs Vercel Blob). The first photo is the main portrait."
+      >
+        <ImageInput value={form.photos} onChange={(v) => set("photos", v)} />
       </Field>
 
       <Button type="submit" disabled={saving}>

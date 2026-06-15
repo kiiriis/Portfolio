@@ -70,7 +70,11 @@ export default async function HomePage() {
           resumeUrl={profile.resumeUrl}
         />
 
-        <About aboutMd={profile.aboutMd} />
+        <About
+          aboutMd={profile.aboutMd}
+          photos={profile.photos}
+          name={profile.name}
+        />
 
         <ExperienceTimeline experiences={experiences} />
 

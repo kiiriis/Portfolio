@@ -22,6 +22,7 @@ export const profileSchema = z.object({
   githubUrl: z.string().url(),
   linkedinUrl: z.string().url(),
   resumeUrl: optionalStr,
+  photos: z.array(z.string()).default([]),
 });
 
 export const experienceSchema = z.object({

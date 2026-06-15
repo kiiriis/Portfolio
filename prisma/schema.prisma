@@ -25,6 +25,7 @@ model Profile {
   githubUrl   String
   linkedinUrl String
   resumeUrl   String?
+  photos      String[] @default([])
   updatedAt   DateTime @updatedAt @default(now())
 }
 
