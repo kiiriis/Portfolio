@@ -38,7 +38,7 @@ export function Contact({ profile }: { profile: Profile }) {
     <section id="contact" className="container scroll-mt-20 py-28">
       <Reveal>
         <div className="flex items-center gap-4">
-          <span className="annotation shrink-0 text-primary">Fig. 07</span>
+          <span className="annotation shrink-0 text-primary">Fig. 08</span>
           <DrawRule className="block h-px flex-1 bg-ink/25" />
           <span className="annotation shrink-0 text-muted-foreground">
             Contact — End of document

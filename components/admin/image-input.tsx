@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { X, Upload, Loader2, ImagePlus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { normalizeImageUrl } from "@/lib/utils";
 
 /** Manage a list of image URLs: paste a URL or upload to Vercel Blob. */
 export function ImageInput({
@@ -19,7 +20,7 @@ export function ImageInput({
   const fileRef = React.useRef<HTMLInputElement>(null);
 
   function addUrl(u: string) {
-    const v = u.trim();
+    const v = normalizeImageUrl(u);
     if (!v) return;
     if (!value.includes(v)) onChange([...value, v]);
     setUrl("");
@@ -77,10 +78,14 @@ export function ImageInput({
                 addUrl(url);
               }
             }}
+            onBlur={() => addUrl(url)}
             placeholder="Paste image URL + Enter"
             className="pl-9"
           />
         </div>
+        <Button type="button" variant="outline" onClick={() => addUrl(url)}>
+          Add
+        </Button>
         <Button
           type="button"
           variant="outline"

@@ -4,6 +4,7 @@ import {
   getEducation,
   getProjects,
   getSkillGroups,
+  getFavoriteGroups,
 } from "@/lib/data";
 import { Nav } from "@/components/public/nav";
 import { Hero } from "@/components/public/hero";
@@ -14,6 +15,7 @@ import { ProjectsGrid } from "@/components/public/projects-grid";
 import { SectionHeading } from "@/components/public/section-heading";
 import { Education } from "@/components/public/education";
 import { SkillsSection } from "@/components/public/skills-section";
+import { FavoritesSection } from "@/components/public/favorites-section";
 import { Contact } from "@/components/public/contact";
 import { Footer } from "@/components/public/footer";
 
@@ -21,14 +23,21 @@ import { Footer } from "@/components/public/footer";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [profile, experiences, education, allProjects, skillGroups] =
-    await Promise.all([
-      getProfile(),
-      getExperiences(),
-      getEducation(),
-      getProjects(),
-      getSkillGroups(),
-    ]);
+  const [
+    profile,
+    experiences,
+    education,
+    allProjects,
+    skillGroups,
+    favoriteGroups,
+  ] = await Promise.all([
+    getProfile(),
+    getExperiences(),
+    getEducation(),
+    getProjects(),
+    getSkillGroups(),
+    getFavoriteGroups(),
+  ]);
 
   if (!profile) {
     return (
@@ -104,6 +113,8 @@ export default async function HomePage() {
         )}
 
         <SkillsSection groups={skillGroups} />
+
+        <FavoritesSection groups={favoriteGroups} />
 
         <Contact profile={profile} />
       </main>

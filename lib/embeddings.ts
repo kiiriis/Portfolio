@@ -8,7 +8,8 @@ export type SourceType =
   | "experience"
   | "education"
   | "project"
-  | "skills";
+  | "skills"
+  | "favorites";
 
 export type Chunk = {
   sourceType: SourceType;
@@ -134,15 +135,34 @@ async function skillChunks(): Promise<Chunk[]> {
   }));
 }
 
+async function favoriteChunks(): Promise<Chunk[]> {
+  const favorites = await prisma.favorite.findMany({
+    orderBy: [{ category: "asc" }, { sortOrder: "asc" }],
+  });
+  const byCat = new Map<string, string[]>();
+  for (const f of favorites) {
+    if (!byCat.has(f.category)) byCat.set(f.category, []);
+    byCat
+      .get(f.category)!
+      .push(f.subtitle ? `${f.title} (${f.subtitle})` : f.title);
+  }
+  return Array.from(byCat.entries()).map(([category, items]) => ({
+    sourceType: "favorites" as const,
+    sourceId: category,
+    content: `Krish's personal favorites — ${category}: ${items.join(", ")}.`,
+  }));
+}
+
 export async function buildCorpus(): Promise<Chunk[]> {
-  const [profile, exp, edu, proj, skills] = await Promise.all([
+  const [profile, exp, edu, proj, skills, favorites] = await Promise.all([
     profileChunks(),
     experienceChunks(),
     educationChunks(),
     projectChunks(),
     skillChunks(),
+    favoriteChunks(),
   ]);
-  return [...profile, ...exp, ...edu, ...proj, ...skills];
+  return [...profile, ...exp, ...edu, ...proj, ...skills, ...favorites];
 }
 
 // ---------- Persistence ----------
@@ -188,10 +208,14 @@ export async function reindexSource(
     case "skills":
       chunks = await skillChunks();
       break;
+    case "favorites":
+      chunks = await favoriteChunks();
+      break;
   }
 
-  if (sourceType === "skills") {
-    await prisma.$executeRaw`DELETE FROM "Embedding" WHERE "sourceType" = 'skills'`;
+  // Skills and favorites are re-indexed as a whole set (chunked per category).
+  if (sourceType === "skills" || sourceType === "favorites") {
+    await prisma.$executeRaw`DELETE FROM "Embedding" WHERE "sourceType" = ${sourceType}`;
   } else {
     await prisma.$executeRaw`
       DELETE FROM "Embedding" WHERE "sourceType" = ${sourceType} AND "sourceId" = ${sourceId}

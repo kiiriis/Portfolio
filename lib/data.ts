@@ -6,6 +6,7 @@ import type {
   Education,
   Project,
   Skill,
+  Favorite,
 } from "@prisma/client";
 
 export type ExperienceWithBullets = Experience & {
@@ -15,6 +16,11 @@ export type ExperienceWithBullets = Experience & {
 export type SkillGroup = {
   category: string;
   skills: Skill[];
+};
+
+export type FavoriteGroup = {
+  category: string;
+  items: Favorite[];
 };
 
 export async function getProfile(): Promise<Profile | null> {
@@ -57,6 +63,22 @@ export async function getSkillGroups(): Promise<SkillGroup[]> {
       groups.push({ category: skill.category, skills: [] });
     }
     groups[order.get(skill.category)!].skills.push(skill);
+  }
+  return groups;
+}
+
+export async function getFavoriteGroups(): Promise<FavoriteGroup[]> {
+  const favorites = await prisma.favorite.findMany({
+    orderBy: [{ category: "asc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
+  });
+  const order = new Map<string, number>();
+  const groups: FavoriteGroup[] = [];
+  for (const fav of favorites) {
+    if (!order.has(fav.category)) {
+      order.set(fav.category, groups.length);
+      groups.push({ category: fav.category, items: [] });
+    }
+    groups[order.get(fav.category)!].items.push(fav);
   }
   return groups;
 }

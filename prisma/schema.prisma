@@ -100,6 +100,22 @@ model Skill {
   @@index([category])
 }
 
+/// Personal "Off the Clock" favorites — music, film, books, etc.
+model Favorite {
+  id        String   @id @default(cuid())
+  category  String // "Music", "Film & TV", "Books", ...
+  title     String
+  subtitle  String? // artist / director / author
+  note      String? // a short personal note
+  url       String? // outbound link (Spotify, Letterboxd, Goodreads, YouTube, ...)
+  imageUrl  String? // cover / poster art
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+
+  @@index([category])
+}
+
 /// One row per embedded chunk. The vector column is unsupported by Prisma's
 /// type system, so reads/writes go through raw SQL (see lib/embeddings.ts).
 model Embedding {

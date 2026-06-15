@@ -64,6 +64,16 @@ export const projectSchema = z.object({
   sortOrder: z.coerce.number().int().default(0),
 });
 
+export const favoriteSchema = z.object({
+  category: z.string().min(1),
+  title: z.string().min(1),
+  subtitle: optionalStr,
+  note: optionalStr,
+  url: optionalUrl,
+  imageUrl: optionalStr,
+  sortOrder: z.coerce.number().int().default(0),
+});
+
 export const skillSchema = z.object({
   category: z.string().min(1),
   name: z.string().min(1),
@@ -75,3 +85,4 @@ export type ExperienceInput = z.infer<typeof experienceSchema>;
 export type EducationInput = z.infer<typeof educationSchema>;
 export type ProjectInput = z.infer<typeof projectSchema>;
 export type SkillInput = z.infer<typeof skillSchema>;
+export type FavoriteInput = z.infer<typeof favoriteSchema>;

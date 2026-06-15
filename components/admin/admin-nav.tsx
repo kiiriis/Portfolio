@@ -9,6 +9,7 @@ import {
   GraduationCap,
   FolderGit2,
   Wrench,
+  Heart,
   ExternalLink,
   LogOut,
 } from "lucide-react";
@@ -22,6 +23,7 @@ const LINKS = [
   { href: "/admin/education", label: "Education", icon: GraduationCap },
   { href: "/admin/projects", label: "Projects", icon: FolderGit2 },
   { href: "/admin/skills", label: "Skills", icon: Wrench },
+  { href: "/admin/favorites", label: "Personal", icon: Heart },
 ];
 
 export function AdminNav() {

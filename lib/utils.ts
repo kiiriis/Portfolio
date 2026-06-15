@@ -32,3 +32,18 @@ export function youTubeId(url?: string | null): string | null {
   );
   return m ? m[1] : null;
 }
+
+/**
+ * Make an image URL safe to use in <img src>. Google Drive *share* links
+ * (drive.google.com/file/d/<id>/view, open?id=<id>, uc?id=<id>) point at an
+ * HTML page, not the image bytes, so they can't be hotlinked. Rewrite them to
+ * the thumbnail endpoint, which serves the actual image. Other URLs pass through.
+ */
+export function normalizeImageUrl(url?: string | null): string {
+  const u = (url ?? "").trim();
+  if (!u) return "";
+  const m = u.match(
+    /drive\.google\.com\/(?:file\/d\/|(?:uc|open)\?(?:[^&]*&)*id=)([A-Za-z0-9_-]+)/
+  );
+  return m ? `https://drive.google.com/thumbnail?id=${m[1]}&sz=w1200` : u;
+}

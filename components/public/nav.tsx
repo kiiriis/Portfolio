@@ -11,7 +11,8 @@ const LINKS = [
   { href: "#experience", label: "Experience", no: "02" },
   { href: "#projects", label: "Projects", no: "04" },
   { href: "#skills", label: "Skills", no: "06" },
-  { href: "#contact", label: "Contact", no: "07" },
+  { href: "#personal", label: "Personal", no: "07" },
+  { href: "#contact", label: "Contact", no: "08" },
 ];
 
 export function Nav({
